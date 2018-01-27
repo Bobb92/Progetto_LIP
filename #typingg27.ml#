@@ -1,0 +1,25 @@
+(*typingg27.ml*)
+
+type ide = string;;
+
+		 
+type eval = None 
+          | Int of int 
+          | Bool of bool;;
+
+		  
+type exp = 
+		   Eint of int 
+		  | Ebool of bool 
+		  | Den of ide
+		  | Prod of exp * exp
+		  | Sum of exp * exp
+		  | Diff of exp * exp
+		  | Eq of exp * exp
+		  | Minus of exp
+		  | Iszero of exp
+		  | Or of exp * exp
+		  | And of exp * exp
+		  | Not of exp
+		  | Ifthenelse of exp * exp * exp;;
+		
