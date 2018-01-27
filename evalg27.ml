@@ -39,21 +39,18 @@ type eval =
 			and
 			env = ide -> eval;;
 
-let typecheck (x, y) =
-      match x with
-      | "int" ->
-    (match y with 
-    |  Int(u) -> true
-    | _ -> false)
-      | "bool" ->
-    (match y with 
-    |  Bool(u) -> true
-    | _ -> false)
-      | "char" -> 
-          (match y with
-          | Char(u) -> true
-          | _ -> false)
-      | _ -> failwith ("not a valid type");;
+let typecheck (x, y) = match x with
+						| "int" -> (match y with 
+									|  Int(u) -> true
+									| _ -> false)
+						| "bool" -> (match y with 
+									|  Bool(u) -> true
+									| _ -> false)
+						| "char" -> (match y with
+									| Char(u) -> true
+									| _ -> false)
+						(*da implementare le liste*)
+						| _ -> failwith ("not a valid type");;
 	  
 let Eq a = match a with
 		| (x,y) -> if typecheck("int",x) & typecheck("int",y) 
@@ -154,6 +151,18 @@ let Tail a = match a with
 let Epair a =  match a with
 			| (x,y) -> (x,y)
 			| _ -> failwith ("invalid tupla");;
+			
+let Ifthenelse a = match a with 
+				  | (x,y,z) -> if typecheck("bool",x) 
+							   then if typecheck("bool",y) & typecheck("bool",z)
+									then if x then y else z
+									else if typecheck("int",y) & typecheck("int",z)
+										 then if x then y else z
+										 else if typecheck("char",y) & typecheck("char",z)
+											  then if x then y else z
+											  else
+							   else failwith ("type error")
+
 
 
 

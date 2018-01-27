@@ -25,12 +25,11 @@ type exp = Val of ide
 			| Less of exp * exp
 			| Cons of exp * exp
 			| Head of exp
-			| Tail of exp(*da fare nella semantica*)
+			| Tail of exp
 			| Fst of exp
 			| Snd of exp
-			| Epair of exp * exp(*da fare nella semantica*)
-			(*ahahahahah queste funzioni sono da capire e vedere come implementarle*)
-			| Ifthenelse of exp * exp * exp
+			| Epair of exp * exp
+			| Ifthenelse of exp * exp * exp(*da finire da implementare*)
 			| Let of ide * exp * exp
 			| Fun of ide * exp
 			| Appl of exp * exp
