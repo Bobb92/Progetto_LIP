@@ -57,7 +57,7 @@ let typecheck (x, y) = match x with
 									| _ -> false)
 						| _ -> failwith ("not a valid type");;
 	  
-let Eq a = match a with
+let eq a = match a with
 		| (x,y) -> if typecheck("int",x) & typecheck("int",y) 
 					then 
 						(match (x,y) with
@@ -69,7 +69,7 @@ let Eq a = match a with
 				  else failwith ("type error")
 		| _ -> failwith ("argument error");;
 		
-let Sum a = match a with 
+let sum a = match a with 
 			| (x,y) -> if typecheck("int",x) & typecheck("int",y) 
 					then 
 						(match (x,y) with
@@ -77,7 +77,7 @@ let Sum a = match a with
 				  else failwith ("type error")
 		| _ -> failwith ("argument error");;
 		
-let Diff a = match a with 
+let diff a = match a with 
 			| (x,y) -> if typecheck("int",x) & typecheck("int",y) 
 					then 
 						(match (x,y) with
@@ -85,7 +85,7 @@ let Diff a = match a with
 				  else failwith ("type error")
 		| _ -> failwith ("argument error");;
 		
-let Times a = match a with 
+let times a = match a with 
 			| (x,y) -> if typecheck("int",x) & typecheck("int",y) 
 					then 
 						(match (x,y) with
@@ -93,7 +93,7 @@ let Times a = match a with
 				  else failwith ("type error")
 		| _ -> failwith ("argument error");;
 		
-let And a = match a with 
+let anda a = match a with 
 			| (x,y) -> if typecheck("bool",x) & typecheck("bool",y) 
 					then 
 						(match (x,y) with
@@ -101,7 +101,7 @@ let And a = match a with
 				  else failwith ("type error")
 		| _ -> failwith ("argument error");;
 		
-let Or a = match a with 
+let ora a = match a with 
 			| (x,y) -> if typecheck("bool",x) & typecheck("bool",y) 
 					then 
 						(match (x,y) with
@@ -109,11 +109,11 @@ let Or a = match a with
 				  else failwith ("type error")
 		| _ -> failwith ("argument error");;
 
-let Not a = if typecheck("bool", a) 
+let not a = if typecheck("bool", a) 
 			then (if a then Bool(false) else Bool(true))
 			else failwith ("type error");;
 			
-let Less a = match a with 
+let less a = match a with 
 			| (x,y) -> if typecheck("int",x) & typecheck("int",y) 
 					then 
 						(match (x,y) with
@@ -121,22 +121,22 @@ let Less a = match a with
 				  else failwith ("type error")
 		| _ -> failwith ("argument error");;
 
-let Head a = if typecheck("list",a) 
+let head a = if typecheck("list",a) 
 			then
 				match a with
 				| x::xl -> x
 				| _ -> failwith ("invalid list")
 			else failwith ("type error");;
 			
-let Fst a = match a with 
+let fst a = match a with 
 			| (x,y) -> x
 			| _ -> failwith ("invalid tupla");;
 			
-let Snd a = match a with 
+let snd a = match a with 
 			| (x,y) -> y
 			| _ -> failwith ("invalid tupla");;
 			
-let Cons a = match a with
+let cons a = match a with
 			| (x,y) -> if typecheck("int",x) & typecheck("int",y) 
 					then 
 						(match (x,y) with
@@ -152,15 +152,15 @@ let Cons a = match a with
 				  else failwith ("type error")
 			| _ -> failwith ("invalid ");;
 			
-let Tail a = match a with
+let tail a = match a with
 			| x::xl -> xl
 			| _ -> failwith ("invalid list");;
 			
-let Epair a =  match a with
+let epair a =  match a with
 			| (x,y) -> (x,y)
 			| _ -> failwith ("invalid tupla");;
 			
-let Ifthenelse a = match a with 
+let ifthenelse a = match a with 
 				  | (x,y,z) -> if typecheck("bool",x) 
 							   then if typecheck("bool",y) & typecheck("bool",z)
 									then if x then y else z
@@ -175,6 +175,14 @@ let Ifthenelse a = match a with
 													  else failwith("type return error")
 							   else failwith ("type error")
 				  | _ -> failwith ("type input error");;
+				  
+let rec sem (e:exp) (r:env) = match e with (*e è l'espressione da valutare,  r è l'ambiente*)
+								
+							| Eint(n) -> Int(n)
+							| Echar(c) -> Char(c)
+							| True (b) -> Bool(true)
+							| False (b) -> Bool(false)
+							| Eq (a,b) -> eq ((sem a r),(sem b r))
 
 
 
