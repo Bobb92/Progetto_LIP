@@ -125,6 +125,7 @@ let head a = if typecheck("list",a)
 			then
 				match a with
 				| x::xl -> x
+				| x::[] -> x
 				| _ -> failwith ("invalid list")
 			else failwith ("type error");;
 			
@@ -183,6 +184,22 @@ let rec sem (e:exp) (r:env) = match e with (*e è l'espressione da valutare,  r 
 							| True (b) -> Bool(true)
 							| False (b) -> Bool(false)
 							| Eq (a,b) -> eq ((sem a r),(sem b r))
+							| Sum (a,b) -> sum ((sem a r),(sem b r))
+							| Diff (a,b) -> diff ((sem a r),(sem b r))
+							| Times (a,b) -> times ((sem a r),(sem b r))
+							| And (a,b) -> anda ((sem a r),(sem b r))
+							| Or (a,b) -> ora ((sem a r),(sem b r))
+							| Not a -> not (sem a r)
+							| Less (a,b) -> less ((sem a r),(sem b r))
+							| Head (a) -> head (sem a r)
+							| Fst (a) -> fst (sem a r)
+							| Snd (a) -> snd (sem a r)
+							| Cons (a,b) -> cons ((sem a r),(sem b r))
+							| Tail (a) -> tail (sem a r)
+							| Epair (a,b) -> epair ((sem a r),(sem b r))
+							| Ifthenelse (a,b,c) -> ifthenelse ((sem a r),(sem b r),(sem c r));;(*da fare la let, rec e appl*)
+							
+							
 
 
 
