@@ -49,7 +49,12 @@ let typecheck (x, y) = match x with
 						| "char" -> (match y with
 									| Char(u) -> true
 									| _ -> false)
-						(*da implementare le liste*)
+						| "liste" -> (match y with
+									| List(u) -> true
+									| _ -> false)
+						| "pair" -> (match y with
+									| Pair(u) -> true
+									| _ -> false)
 						| _ -> failwith ("not a valid type");;
 	  
 let Eq a = match a with
@@ -116,9 +121,12 @@ let Less a = match a with
 				  else failwith ("type error")
 		| _ -> failwith ("argument error");;
 
-let Head a = match a with
-			| x::xl -> x
-			| _ -> failwith ("invalid list");;
+let Head a = if typecheck("list",a) 
+			then
+				match a with
+				| x::xl -> x
+				| _ -> failwith ("invalid list")
+			else failwith ("type error");;
 			
 let Fst a = match a with 
 			| (x,y) -> x
@@ -160,8 +168,13 @@ let Ifthenelse a = match a with
 										 then if x then y else z
 										 else if typecheck("char",y) & typecheck("char",z)
 											  then if x then y else z
-											  else
+											  else if typecheck("list",y) & typecheck("list",z)
+												  then if x then y else z
+												  else if typecheck("pair",y) & typecheck("pair",z)
+													  then if x then y else z
+													  else failwith("type return error")
 							   else failwith ("type error")
+				  | _ -> failwith ("type input error");;
 
 
 
